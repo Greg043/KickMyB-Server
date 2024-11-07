@@ -154,6 +154,12 @@ public class ServiceTaskImpl implements ServiceTask {
     }
 
     @Override
+    public String deleteTask(long taskID, MUser user) {
+        user.tasks.remove(repo.findById(taskID).get());
+        return "Task deleted";
+    }
+
+    @Override
     public TaskDetailPhotoResponse detailPhoto(Long id, MUser user) {
         MTask element = user.tasks.stream().filter(elt -> elt.id == id).findFirst().get();
         TaskDetailPhotoResponse response = new TaskDetailPhotoResponse();

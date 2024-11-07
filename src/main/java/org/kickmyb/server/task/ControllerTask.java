@@ -4,6 +4,7 @@ import org.kickmyb.server.ConfigHTTP;
 import org.kickmyb.server.account.MUser;
 import org.kickmyb.transfer.AddTaskRequest;
 import org.kickmyb.transfer.HomeItemResponse;
+import org.kickmyb.transfer.TaskDetailPhotoResponse;
 import org.kickmyb.transfer.TaskDetailResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -81,5 +82,13 @@ public class ControllerTask {
     private MUser currentUser() {
         UserDetails ud = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return serviceTask.userFromUsername(ud.getUsername());
+    }
+
+    @GetMapping("/api/delete/{id}")
+    public @ResponseBody String deleteTask(@PathVariable long id) {
+        System.out.println("KICKB SERVER : Delete Task ");
+        ConfigHTTP.attenteArticifielle();
+        MUser user = currentUser();
+        return serviceTask.deleteTask(id, user);
     }
 }
